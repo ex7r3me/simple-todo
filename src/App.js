@@ -5,11 +5,13 @@ import _ from "lodash";
 
 class App extends Component {
   state = {
+    newTaskValue: "",
     tasks: [
       { id: 0, title: "create a Readme", priority: 1, isDone: false },
       { id: 1, title: "add something else", priority: 0, isDone: false },
       { id: 2, title: "read the specs", priority: 2, isDone: true }
-    ]
+    ],
+    nextTaskId: 3
   };
   deleteTask = removeTaskId => {
     this.setState({
@@ -42,6 +44,25 @@ class App extends Component {
   sortTasks = (key, direction) => {
     this.setState({ tasks: _.orderBy(this.state.tasks, [key], "asc") });
   };
+  newTaskChangeValue = event => {
+    this.setState({ newTaskValue: event.target.value });
+  };
+
+  addTask = event => {
+    this.setState({
+      tasks: this.state.tasks.concat([
+        {
+          title: this.state.newTaskValue,
+          isDone: false,
+          priority: 1,
+          id: this.state.nextTaskId
+        }
+      ]),
+      newTaskValue: "",
+      nextTaskId: this.state.nextTaskId + 1
+    });
+    event.preventDefault();
+  };
   render() {
     let taskList = this.state.tasks.map(task => {
       return (
@@ -70,10 +91,14 @@ class App extends Component {
       <div className="App">
         <div>
           <h1>Todo List</h1>
-          <form>
+          <form onSubmit={this.addTask}>
             <label>
               Name:
-              <input type="text" name="name" />
+              <input
+                type="text"
+                value={this.state.newTaskValue}
+                onChange={this.newTaskChangeValue}
+              />
             </label>
             <input type="submit" value="Submit" />
           </form>

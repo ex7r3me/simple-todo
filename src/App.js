@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import SingleTask from "./component/SingleTask";
 import "./App.css";
+import _ from "lodash";
 
 class App extends Component {
   state = {
@@ -30,6 +31,9 @@ class App extends Component {
           task.id === taskId ? { ...task, priority: --task.priority } : task
       )
     });
+  };
+  sortTasks = (key, direction) => {
+    this.setState({ tasks: _.orderBy(this.state.tasks, [key], "asc") });
   };
   render() {
     let taskList = this.state.tasks.map(task => {
@@ -63,9 +67,27 @@ class App extends Component {
             <input type="submit" value="Submit" />
           </form>
           <p>sort by</p>
-          <button>Name</button>
-          <button>Due Date</button>
-          <button>Priority</button>
+          <button
+            onClick={() => {
+              this.sortTasks("title");
+            }}
+          >
+            Name
+          </button>
+          <button
+            onClick={() => {
+              this.sortTasks("dueDate");
+            }}
+          >
+            Due Date
+          </button>
+          <button
+            onClick={() => {
+              this.sortTasks("priority");
+            }}
+          >
+            Priority
+          </button>
           <div>{taskList}</div>
         </div>
       </div>

@@ -13,15 +13,36 @@ const typeDefs = gql`
   type Query {
     tasks: [Task]
   }
+  type Mutation {
+    createTask(
+      title: String!
+      priority: Int
+      dueDate: String
+      isDone: Boolean
+    ): Task!
+  }
 `;
 
 // Provide resolver functions for your schema fields
 const resolvers = {
   Query: {
     tasks: () => tasks
+  },
+  Mutation: {
+    createTask: (root, { title, priority, isDone, dueDate }) => {
+      const task = {
+        priority,
+        isDone,
+        dueDate,
+        title,
+        id: tasks.length
+      };
+      tasks.push(task);
+      return task;
+    }
   }
 };
-const tasks = [
+let tasks = [
   {
     id: 0,
     title: "create a Readme",

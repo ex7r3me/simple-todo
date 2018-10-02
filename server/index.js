@@ -42,6 +42,13 @@ const tasks = [
     priority: 2,
     isDone: true,
     dueDate: null
+  },
+  {
+    id: 3,
+    title: "Let's get started",
+    priorty: 3,
+    isDone: false,
+    dueDate: null
   }
 ];
 const server = new ApolloServer({ typeDefs, resolvers });

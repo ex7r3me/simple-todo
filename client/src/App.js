@@ -3,34 +3,24 @@ import SingleTask from "./component/SingleTask";
 import moment from "moment";
 import "./App.css";
 import _ from "lodash";
+import gql from "graphql-tag";
+import { Query } from "react-apollo";
+const GET_TASKS = gql`
+  {
+    tasks {
+      id
+      title
+      dueDate
+      isDone
+      priority
+    }
+  }
+`;
 
 class App extends Component {
   state = {
     newTaskValue: "",
-    tasks: [
-      {
-        id: 0,
-        title: "create a Readme",
-        priority: 1,
-        isDone: false,
-        dueDate: moment()
-      },
-      {
-        id: 1,
-        title: "add something else",
-        priority: 0,
-        isDone: false,
-        dueDate: moment()
-      },
-      {
-        id: 2,
-        title: "read the specs",
-        priority: 2,
-        isDone: true,
-        dueDate: moment()
-      }
-    ],
-    nextTaskId: 3
+    nextTaskId: 1
   };
   deleteTask = removeTaskId => {
     this.setState({
@@ -84,30 +74,42 @@ class App extends Component {
     event.preventDefault();
   };
   render() {
-    let taskList = this.state.tasks.map(task => {
-      return (
-        <SingleTask
-          isDone={task.isDone}
-          dueDate={task.dueDate}
-          key={task.id}
-          onDone={() => {
-            this.toggleTaskStatus(task.id);
-          }}
-          onDelete={() => {
-            this.deleteTask(task.id);
-          }}
-          onIncreasePriority={() => {
-            this.increasePriority(task.id);
-          }}
-          onDecreasePriority={() => {
-            this.decreasePriority(task.id);
-          }}
-          priority={task.priority}
-          id={task.id}
-          title={task.title}
-        />
-      );
-    });
+    let taskList = (
+      <Query query={GET_TASKS}>
+        {({ loading, error, data }) => {
+          if (loading) return "Loading...";
+          if (error) return `Error! ${error.message}`;
+
+          return (
+            <div>
+              {data.tasks.map(task => (
+                <SingleTask
+                  isDone={task.isDone}
+                  dueDate={task.dueDate}
+                  key={task.id}
+                  onDone={() => {
+                    this.toggleTaskStatus(task.id);
+                  }}
+                  onDelete={() => {
+                    this.deleteTask(task.id);
+                  }}
+                  onIncreasePriority={() => {
+                    this.increasePriority(task.id);
+                  }}
+                  onDecreasePriority={() => {
+                    this.decreasePriority(task.id);
+                  }}
+                  priority={task.priority}
+                  id={task.id}
+                  title={task.title}
+                />
+              ))}
+            </div>
+          );
+        }}
+      </Query>
+    );
+
     return (
       <div className="App">
         <div>

@@ -1,4 +1,7 @@
-.task-container  {
-    display:flex;
-    flex-direction: row;
+.task-container {
+  display: flex;
+  flex-direction: row;
+}
+.done {
+  text-decoration: line-through;
 }

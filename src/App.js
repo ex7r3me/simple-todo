@@ -6,9 +6,9 @@ import _ from "lodash";
 class App extends Component {
   state = {
     tasks: [
-      { id: 0, title: "create a Readme", priority: 1 },
-      { id: 1, title: "add something else", priority: 0 },
-      { id: 2, title: "read the specs", priority: 2 }
+      { id: 0, title: "create a Readme", priority: 1, isDone: false },
+      { id: 1, title: "add something else", priority: 0, isDone: false },
+      { id: 2, title: "read the specs", priority: 2, isDone: true }
     ]
   };
   deleteTask = removeTaskId => {
@@ -32,6 +32,13 @@ class App extends Component {
       )
     });
   };
+  toggleTaskStatus = taskId => {
+    this.setState({
+      tasks: this.state.tasks.map(
+        task => (task.id === taskId ? { ...task, isDone: !task.isDone } : task)
+      )
+    });
+  };
   sortTasks = (key, direction) => {
     this.setState({ tasks: _.orderBy(this.state.tasks, [key], "asc") });
   };
@@ -39,7 +46,11 @@ class App extends Component {
     let taskList = this.state.tasks.map(task => {
       return (
         <SingleTask
+          isDone={task.isDone}
           key={task.id}
+          onDone={() => {
+            this.toggleTaskStatus(task.id);
+          }}
           onDelete={() => {
             this.deleteTask(task.id);
           }}

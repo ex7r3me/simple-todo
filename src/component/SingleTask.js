@@ -3,6 +3,7 @@ import "react-dates/initialize";
 import { SingleDatePicker } from "react-dates";
 import "react-dates/lib/css/_datepicker.css";
 import "./SingleTask.css";
+import classnames from "classnames";
 class SingleTask extends React.Component {
   state = {
     date: null,
@@ -26,12 +27,19 @@ class SingleTask extends React.Component {
   render() {
     return (
       <div className="task-container">
-        <div> {this.props.title}</div>
+        <button onClick={this.props.onDone}>#</button>
+        <div className={classnames({ done: this.props.isDone })}>
+          {this.props.title}
+        </div>
         <SingleDatePicker
           date={this.state.date}
-          onDateChange={date => this.setState({ date })} //
+          onDateChange={date => this.setState({ date })}
           focused={this.state.focused}
-          onFocusChange={({ focused }) => this.setState({ focused })}
+          onFocusChange={({ focused }) =>
+            this.setState({
+              focused
+            })
+          }
           id={`task-date-${this.props.id}`}
         />
         <div className="priority">

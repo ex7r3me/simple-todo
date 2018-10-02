@@ -15,6 +15,22 @@ class App extends Component {
       tasks: this.state.tasks.filter(task => task.id !== removeTaskId)
     });
   };
+  increasePriority = taskId => {
+    this.setState({
+      tasks: this.state.tasks.map(
+        task =>
+          task.id === taskId ? { ...task, priority: ++task.priority } : task
+      )
+    });
+  };
+  decreasePriority = taskId => {
+    this.setState({
+      tasks: this.state.tasks.map(
+        task =>
+          task.id === taskId ? { ...task, priority: --task.priority } : task
+      )
+    });
+  };
   render() {
     let taskList = this.state.tasks.map(task => {
       return (
@@ -23,8 +39,12 @@ class App extends Component {
           onDelete={() => {
             this.deleteTask(task.id);
           }}
-          onIncreasePriority={() => {}}
-          onDecreasePriority={() => {}}
+          onIncreasePriority={() => {
+            this.increasePriority(task.id);
+          }}
+          onDecreasePriority={() => {
+            this.decreasePriority(task.id);
+          }}
           priority={task.priority}
           id={task.id}
           title={task.title}

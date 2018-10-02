@@ -6,7 +6,7 @@ import "./SingleTask.css";
 import classnames from "classnames";
 class SingleTask extends React.Component {
   state = {
-    date: null,
+    date: this.props.dueDate,
     focused: false
   };
   priorityNames = priorityNumber => {

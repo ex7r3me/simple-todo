@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import SingleTask from "./component/SingleTask";
+import moment from "moment";
 import "./App.css";
 import _ from "lodash";
 
@@ -7,9 +8,27 @@ class App extends Component {
   state = {
     newTaskValue: "",
     tasks: [
-      { id: 0, title: "create a Readme", priority: 1, isDone: false },
-      { id: 1, title: "add something else", priority: 0, isDone: false },
-      { id: 2, title: "read the specs", priority: 2, isDone: true }
+      {
+        id: 0,
+        title: "create a Readme",
+        priority: 1,
+        isDone: false,
+        dueDate: moment()
+      },
+      {
+        id: 1,
+        title: "add something else",
+        priority: 0,
+        isDone: false,
+        dueDate: moment()
+      },
+      {
+        id: 2,
+        title: "read the specs",
+        priority: 2,
+        isDone: true,
+        dueDate: moment()
+      }
     ],
     nextTaskId: 3
   };
@@ -55,7 +74,8 @@ class App extends Component {
           title: this.state.newTaskValue,
           isDone: false,
           priority: 1,
-          id: this.state.nextTaskId
+          id: this.state.nextTaskId,
+          dueDate: moment()
         }
       ]),
       newTaskValue: "",
@@ -68,6 +88,7 @@ class App extends Component {
       return (
         <SingleTask
           isDone={task.isDone}
+          dueDate={task.dueDate}
           key={task.id}
           onDone={() => {
             this.toggleTaskStatus(task.id);

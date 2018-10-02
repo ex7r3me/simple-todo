@@ -5,7 +5,8 @@ var { buildSchema } = require("graphql");
 // Construct a schema, using GraphQL schema language
 var schema = buildSchema(`
   type Query {
-    hello: String
+    hello: String,
+    world: String
   }
 `);
 
@@ -13,6 +14,9 @@ var schema = buildSchema(`
 var root = {
   hello: () => {
     return "Hello world!";
+  },
+  world: () => {
+    return "foo bar";
   }
 };
 
@@ -25,5 +29,7 @@ app.use(
     graphiql: true
   })
 );
+app.use(express.static("html"));
+
 app.listen(4000);
 console.log("Running a GraphQL API server at localhost:4000/graphql");

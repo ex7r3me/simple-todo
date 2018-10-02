@@ -3,7 +3,17 @@ import SingleTask from './component/SingleTask'
 import './App.css'
 
 class App extends Component {
+  state = {
+    tasks : [
+      {title: 'create a Readme'},
+      {title: 'add something else'},
+      {title: 'read the specs'}
+    ]
+  }
   render () {
+    let taskList = this.state.tasks.map((task, index) => {
+      return <SingleTask id={index} title={task.title} />
+    })
     return (
       <div className='App'>
         <div>
@@ -20,7 +30,7 @@ class App extends Component {
           <button>Due Date</button>
           <button>Priority</button>
           <div>
-            <SingleTask />
+            {taskList}
           </div>
         </div>
       </div>

@@ -1,26 +1,47 @@
-import React from 'react'
-import 'react-dates/initialize'
-import { SingleDatePicker } from 'react-dates'
-import 'react-dates/lib/css/_datepicker.css'
-import './SingleTask.css'
+import React from "react";
+import "react-dates/initialize";
+import { SingleDatePicker } from "react-dates";
+import "react-dates/lib/css/_datepicker.css";
+import "./SingleTask.css";
 class SingleTask extends React.Component {
-    state = {
-        date: null,
-        focused: false
+  state = {
+    date: null,
+    focused: false
+  };
+  priorityNames = priorityNumber => {
+    switch (priorityNumber) {
+      case 0:
+        return "High";
+        break;
+      case 1:
+        return "Medium";
+        break;
+      case 2:
+        return "Low";
+        break;
+      default:
+        return "None";
     }
-  render () {
+  };
+  render() {
     return (
-      <div class="task-container">
+      <div className="task-container">
         <div> {this.props.title}</div>
         <SingleDatePicker
           date={this.state.date}
           onDateChange={date => this.setState({ date })} //
           focused={this.state.focused}
           onFocusChange={({ focused }) => this.setState({ focused })}
-          id={this.props.id}
+          id={`task-date-${this.props.id}`}
         />
+        <div className="priority">
+          {this.priorityNames(this.props.priority)}
+        </div>
+        <button onClick={this.props.onIncreasePriority}>+</button>
+        <button onClick={this.props.onDecreasePriority}>-</button>
+        <button onClick={this.props.onDelete}>x</button>
       </div>
-    )
+    );
   }
 }
-export default SingleTask
+export default SingleTask;

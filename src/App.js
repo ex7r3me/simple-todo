@@ -75,7 +75,7 @@ class App extends Component {
           isDone: false,
           priority: 1,
           id: this.state.nextTaskId,
-          dueDate: moment()
+          dueDate: moment().add(7, "days")
         }
       ]),
       newTaskValue: "",

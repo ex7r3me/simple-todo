@@ -5,7 +5,8 @@ import _ from "lodash";
 
 class TaskList extends React.Component {
   state = {
-    tasks: this.props.tasks
+    tasks: this.props.tasks,
+    orderBy: "name"
   };
   deleteTask = removeTaskId => {
     this.setState({
@@ -36,11 +37,16 @@ class TaskList extends React.Component {
     });
   };
   sortTasks = (key, direction) => {
-    this.setState({ tasks: _.orderBy(this.state.tasks, [key], "asc") });
+    this.setState({ orderBy: key });
   };
 
   render() {
-    let taskList = this.state.tasks.map(task => {
+    let sortedTaskList = _.orderBy(
+      this.props.tasks,
+      [this.state.orderBy],
+      "asc"
+    );
+    let taskList = sortedTaskList.map(task => {
       return (
         <SingleTask
           isDone={task.isDone}

@@ -2,19 +2,34 @@ import React from "react";
 import { Mutation } from "react-apollo";
 import moment from "moment";
 import gql from "graphql-tag";
+const GET_TASKS = gql`
+  query {
+    tasks {
+      id
+      title
+      dueDate
+      isDone
+      priority
+    }
+  }
+`;
+
 const ADD_TODO = gql`
   mutation CreateTask(
     $title: String!
     $isDone: Boolean
     $dueDate: String
     $priority: Int
+    $id: Int
   ) {
     createTask(
       title: $title
       isDone: $isDone
       dueDate: $dueDate
       priority: $priority
+      id: $id
     ) {
+      id
       title
       isDone
       priority
@@ -27,18 +42,30 @@ class AddTask extends React.Component {
     let input;
 
     return (
-      <Mutation mutation={ADD_TODO}>
-        {(addTodo, { data }) => (
+      <Mutation
+        mutation={ADD_TODO}
+        update={(cache, { data: { createTask } }) => {
+          const query = GET_TASKS;
+          const { tasks } = cache.readQuery({ query });
+          console.log(tasks.concat([createTask]));
+          cache.writeQuery({
+            query,
+            data: { tasks: tasks.concat([createTask]) }
+          });
+        }}
+      >
+        {(createTask, { data }) => (
           <div>
             <form
               onSubmit={e => {
                 e.preventDefault();
-                addTodo({
+                createTask({
                   variables: {
                     title: input.value,
                     isDone: false,
                     priority: 1,
-                    dueDate: moment().add(7, "days")
+                    dueDate: null, //moment().add(7, "days")
+                    id: 8229
                   }
                 });
                 input.value = "";

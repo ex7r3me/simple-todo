@@ -1,5 +1,7 @@
-const { gql } = require("apollo-server-express");
-exports.typeDefs = gql`
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const apollo_server_express_1 = require("apollo-server-express");
+exports.typeDefs = apollo_server_express_1.gql `
   type Task {
     id: Int!
     title: String
@@ -25,8 +27,7 @@ exports.typeDefs = gql`
       dueDate: String
       isDone: Boolean
     ): Task!
-    deleteTask(
-      id: Int
-    ): Int!
+    deleteTask(id: Int): Int!
   }
 `;
+//# sourceMappingURL=typeDefs.js.map

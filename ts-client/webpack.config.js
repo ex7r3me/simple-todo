@@ -3,6 +3,7 @@ const path = require("path"),
   HtmlWebpackPlugin = require("html-webpack-plugin");
 
 module.exports = {
+  mode: "development",
   entry: {
     app: ["./src/app/Index.tsx", "webpack-hot-middleware/client"],
     vendor: ["react", "react-dom"]
@@ -10,7 +11,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, "dist"),
     filename: "js/[name].bundle.js"
-    },
+  },
   devtool: "source-map",
   resolve: {
     extensions: [".mjs", ".js", ".jsx", ".json", ".ts", ".tsx"]
@@ -25,19 +26,24 @@ module.exports = {
         test: /\.tsx?$/,
         use: [
           {
-            loader: 'ts-loader',
+            loader: "ts-loader",
             options: {
               transpileOnly: true,
-              experimentalWatchApi: true,
-            },
-          },
-        ],
+              experimentalWatchApi: true
+            }
+          }
+        ]
       },
       {
         test: /\.css$/,
-        loader:[ 'style-loader', 'css-loader' ]
+        loader: ["style-loader", "css-loader"]
       },
-      { enforce: "pre", test: /\.js$/, loader: "source-map-loader" }
+      {
+        enforce: "pre",
+        test: /\.js$/,
+        loader: "source-map-loader",
+        exclude: [/node_modules/, /build/, /__test__/]
+      }
     ]
   },
   plugins: [

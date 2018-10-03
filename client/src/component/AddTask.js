@@ -47,7 +47,6 @@ class AddTask extends React.Component {
         update={(cache, { data: { createTask } }) => {
           const query = GET_TASKS;
           const { tasks } = cache.readQuery({ query });
-          console.log(tasks.concat([createTask]));
           cache.writeQuery({
             query,
             data: { tasks: tasks.concat([createTask]) }

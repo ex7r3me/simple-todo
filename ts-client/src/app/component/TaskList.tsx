@@ -1,13 +1,34 @@
 import * as React from "react";
 import SingleTask from "./SingleTask";
 import SortButtons from "./SortButtons";
+import * as moment from "moment";
 import * as _ from "lodash";
+interface Task {
+  title: string;
+  priority: number;
+  isDone: boolean;
+  dueDate: moment.Moment;
+  id: number;
+}
+type OrderTypes = "name" | "dueDate" | "priority";
+type OrderDirectionTypes = "asc" | "desc";
+class TaskList extends React.Component<
+  { tasks: Array<Task> },
+  {
+    tasks: Array<Task>;
+    orderBy: OrderTypes;
+    orderDirection: OrderDirectionTypes;
+  }
+> {
+  constructor() {
+    super(null);
+    this.state = {
+      tasks: [],
+      orderDirection: "asc",
+      orderBy: "name"
+    };
+  }
 
-class TaskList extends React.Component {
-  state = {
-    tasks: this.props.tasks,
-    orderBy: "name"
-  };
   deleteTask = removeTaskId => {
     this.setState({
       tasks: this.state.tasks.filter(task => task.id !== removeTaskId)
@@ -36,21 +57,20 @@ class TaskList extends React.Component {
       )
     });
   };
-  sortTasks = (key, direction) => {
-    this.setState({ orderBy: key });
+  sortTasks = (key: OrderTypes, direction: OrderDirectionTypes) => {
+    this.setState({ orderBy: key, orderDirection: direction });
   };
 
   render() {
     let sortedTaskList = _.orderBy(
       this.props.tasks,
       [this.state.orderBy],
-      "asc"
+      this.state.orderDirection
     );
     let taskList = sortedTaskList.map(task => {
       return (
         <SingleTask
-          isDone={task.isDone}
-          dueDate={task.dueDate}
+          task={task}
           key={task.id}
           onDone={() => {
             this.toggleTaskStatus(task.id);
@@ -64,9 +84,6 @@ class TaskList extends React.Component {
           onDecreasePriority={() => {
             this.decreasePriority(task.id);
           }}
-          priority={task.priority}
-          id={task.id}
-          title={task.title}
         />
       );
     });

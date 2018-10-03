@@ -22,7 +22,7 @@ class AddTask extends React.Component {
                     isDone: false,
                     priority: 1,
                     dueDate: null, //moment().add(7, "days")
-                    id: 8229
+                    id: null
                   }
                 });
                 input.value = "";

@@ -1,21 +1,9 @@
 import * as React from "react";
 import TaskList from "./component/TaskList";
-import moment from "moment";
 import AddTask from "./component/AddTask";
 import "./App.css";
-import gql from "graphql-tag";
 import { Query, Mutation } from "react-apollo";
-const GET_TASKS = gql`
-  query {
-    tasks {
-      id
-      title
-      dueDate
-      isDone
-      priority
-    }
-  }
-`;
+import { GET_TASKS } from './graphQueries'
 class App extends React.Component {
   render() {
     let input;

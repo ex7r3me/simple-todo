@@ -21,7 +21,18 @@ const typeDefs = gql`
       dueDate: String
       isDone: Boolean
     ): Task!
+    updateTask(
+      id: Int
+      title: String!
+      priority: Int
+      dueDate: String
+      isDone: Boolean
+    ): Task!
+    deleteTask(
+      id: Int
+    ): Int!
   }
+  
 `;
 
 // Provide resolver functions for your schema fields
@@ -40,7 +51,22 @@ const resolvers = {
       };
       tasks.push(task);
       return task;
-    }
+    },
+    updateTask: (root, { id, title, priority, isDone, dueDate }) => {
+      const updatedTask = {
+        priority,
+        isDone,
+        dueDate,
+        title,
+        id
+      };
+      tasks = tasks.map(task => task.id === updatedTask.id ? updatedTask : task)
+      return updatedTask;
+    },
+    deleteTask: (root, { id }) => {
+      tasks = tasks.filter(task => task.id !== id);
+      return id;
+    },
   }
 };
 let tasks = [

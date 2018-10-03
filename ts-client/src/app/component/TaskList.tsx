@@ -10,7 +10,7 @@ interface Task {
   dueDate: moment.Moment;
   id: number;
 }
-type OrderTypes = "name" | "dueDate" | "priority";
+type OrderTypes = "title" | "dueDate" | "priority";
 type OrderDirectionTypes = "asc" | "desc";
 class TaskList extends React.Component<
   { tasks: Array<Task> },
@@ -25,7 +25,7 @@ class TaskList extends React.Component<
     this.state = {
       tasks: [],
       orderDirection: "asc",
-      orderBy: "name"
+      orderBy: "title"
     };
   }
 
@@ -57,8 +57,8 @@ class TaskList extends React.Component<
       )
     });
   };
-  sortTasks = (key: OrderTypes, direction: OrderDirectionTypes) => {
-    this.setState({ orderBy: key, orderDirection: direction });
+  sortTasks = (key: OrderTypes) => {
+    this.setState({ orderBy: key, orderDirection: "asc" });
   };
 
   render() {

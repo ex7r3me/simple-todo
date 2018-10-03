@@ -1,6 +1,9 @@
 import * as React from "react";
 import * as moment from "moment";
 import "react-dates/initialize";
+import { Mutation } from "react-apollo";
+import { DELETE_TODO, UPDATE_TODO } from "../graphQueries";
+import { updateCacheDelete } from "../utils/updateCache";
 import { SingleDatePicker } from "react-dates";
 import "react-dates/lib/css/_datepicker.css";
 import "./SingleTask.css";
@@ -49,8 +52,21 @@ class SingleTask extends React.Component<
     const { title, isDone, id, priority }: Task = this.props.task;
     return (
       <div className="task-container">
-        <button onClick={this.props.onDone}>#</button>
-        <div className={ isDone ? 'done' : '' }>{title}</div>
+        <Mutation mutation={UPDATE_TODO} update={updateCacheDelete}>
+          {(updateTodo: (variables: object) => {}, {}) => (
+            <button
+              onClick={() => {
+                const newStatus = !isDone;
+                updateTodo({
+                  variables: { title, isDone: newStatus, id, priority }
+                });
+              }}
+            >
+              #
+            </button>
+          )}
+        </Mutation>
+        <div className={isDone ? "done" : ""}>{title}</div>
         <SingleDatePicker
           date={this.state.date}
           onDateChange={date => this.setState({ date })}
@@ -63,9 +79,45 @@ class SingleTask extends React.Component<
           id={`task-date-${id}`}
         />
         <div className="priority">{this.priorityNames(priority)}</div>
-        <button onClick={this.props.onIncreasePriority}>+</button>
-        <button onClick={this.props.onDecreasePriority}>-</button>
-        <button onClick={this.props.onDelete}>x</button>
+        <Mutation mutation={UPDATE_TODO} update={updateCacheDelete}>
+          {(updateTodo: (variables: object) => {}, {}) => (
+            <button
+              onClick={() => {
+                const newPriority = priority - 1;
+                updateTodo({
+                  variables: { title, isDone, id, priority: newPriority }
+                });
+              }}
+            >
+              +
+            </button>
+          )}
+        </Mutation>
+        <Mutation mutation={UPDATE_TODO} update={updateCacheDelete}>
+          {(updateTodo: (variables: object) => {}, {}) => (
+            <button
+              onClick={() => {
+                const newPriority = priority + 1;
+                updateTodo({
+                  variables: { title, isDone, id, priority: newPriority }
+                });
+              }}
+            >
+              -
+            </button>
+          )}
+        </Mutation>
+        <Mutation mutation={DELETE_TODO} update={updateCacheDelete}>
+          {(deleteTodo: (variables: object) => {}, { data }) => (
+            <button
+              onClick={() => {
+                deleteTodo({ variables: { id } });
+              }}
+            >
+              x
+            </button>
+          )}
+        </Mutation>
       </div>
     );
   }

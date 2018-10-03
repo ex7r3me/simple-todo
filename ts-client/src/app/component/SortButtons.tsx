@@ -1,6 +1,9 @@
 import * as React from "react";
+type OrderTypes = "title" | "dueDate" | "priority";
 
-class SortButtons extends React.Component {
+class SortButtons extends React.Component<{
+  sortTasks: (orderBy: OrderTypes)=> void
+}> {
   render() {
     return (
       <div>

@@ -1,57 +1,15 @@
 import * as React from "react";
 import { Mutation } from "react-apollo";
-import moment from "moment";
-import * as gql from "graphql-tag";
-const GET_TASKS = gql`
-  query {
-    tasks {
-      id
-      title
-      dueDate
-      isDone
-      priority
-    }
-  }
-`;
-
-const ADD_TODO = gql`
-  mutation CreateTask(
-    $title: String!
-    $isDone: Boolean
-    $dueDate: String
-    $priority: Int
-    $id: Int
-  ) {
-    createTask(
-      title: $title
-      isDone: $isDone
-      dueDate: $dueDate
-      priority: $priority
-      id: $id
-    ) {
-      id
-      title
-      isDone
-      priority
-      dueDate
-    }
-  }
-`;
+import { ADD_TODO } from '../graphQueries'
+import { updateCacheCreate } from '../utils/updateCache'
 class AddTask extends React.Component {
   render() {
-    let input;
+    let input: object;
 
     return (
       <Mutation
         mutation={ADD_TODO}
-        update={(cache, { data: { createTask } }) => {
-          const query = GET_TASKS;
-          const { tasks } = cache.readQuery({ query });
-          cache.writeQuery({
-            query,
-            data: { tasks: tasks.concat([createTask]) }
-          });
-        }}
+        update={updateCacheCreate}
       >
         {(createTask, { data }) => (
           <div>

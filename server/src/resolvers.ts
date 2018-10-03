@@ -1,11 +1,25 @@
 import { defaultTasks } from "./defaultTasks";
+import moment from "moment";
 let tasks = defaultTasks;
 export const resolvers = {
   Query: {
     tasks: () => tasks
   },
   Mutation: {
-    createTask: (root, { title, priority, isDone, dueDate }) => {
+    createTask: (
+      root: any,
+      {
+        title,
+        priority,
+        isDone,
+        dueDate
+      }: {
+        title: string;
+        priority: number;
+        isDone: boolean;
+        dueDate: moment.Moment;
+      }
+    ) => {
       const task = {
         priority,
         isDone,
@@ -16,7 +30,22 @@ export const resolvers = {
       tasks.push(task);
       return task;
     },
-    updateTask: (root, { id, title, priority, isDone, dueDate }) => {
+    updateTask: (
+      root: any,
+      {
+        id,
+        title,
+        priority,
+        isDone,
+        dueDate
+      }: {
+        id: number;
+        title: string;
+        priority: number;
+        isDone: boolean;
+        dueDate: moment.Moment;
+      }
+    ) => {
       const updatedTask = {
         priority,
         isDone,
@@ -29,7 +58,7 @@ export const resolvers = {
       );
       return updatedTask;
     },
-    deleteTask: (root, { id }) => {
+    deleteTask: (root: any, { id }: { id: number }) => {
       tasks = tasks.filter(task => task.id !== id);
       return id;
     }

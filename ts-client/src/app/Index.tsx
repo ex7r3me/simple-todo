@@ -7,7 +7,6 @@ import { ApolloProvider } from "react-apollo";
 declare let module: any
 
 const client = new ApolloClient({
-  connectToDevTools: true,
   uri: "http://localhost:8080/graphql"
 });
 

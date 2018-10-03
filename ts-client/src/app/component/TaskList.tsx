@@ -28,35 +28,6 @@ class TaskList extends React.Component<
       orderBy: "title"
     };
   }
-
-  deleteTask = removeTaskId => {
-    this.setState({
-      tasks: this.state.tasks.filter(task => task.id !== removeTaskId)
-    });
-  };
-  increasePriority = taskId => {
-    this.setState({
-      tasks: this.state.tasks.map(
-        task =>
-          task.id === taskId ? { ...task, priority: --task.priority } : task
-      )
-    });
-  };
-  decreasePriority = taskId => {
-    this.setState({
-      tasks: this.state.tasks.map(
-        task =>
-          task.id === taskId ? { ...task, priority: ++task.priority } : task
-      )
-    });
-  };
-  toggleTaskStatus = taskId => {
-    this.setState({
-      tasks: this.state.tasks.map(
-        task => (task.id === taskId ? { ...task, isDone: !task.isDone } : task)
-      )
-    });
-  };
   sortTasks = (key: OrderTypes) => {
     this.setState({ orderBy: key, orderDirection: "asc" });
   };
@@ -72,18 +43,6 @@ class TaskList extends React.Component<
         <SingleTask
           task={task}
           key={task.id}
-          onDone={() => {
-            this.toggleTaskStatus(task.id);
-          }}
-          onDelete={() => {
-            this.deleteTask(task.id);
-          }}
-          onIncreasePriority={() => {
-            this.increasePriority(task.id);
-          }}
-          onDecreasePriority={() => {
-            this.decreasePriority(task.id);
-          }}
         />
       );
     });

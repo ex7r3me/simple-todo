@@ -4,7 +4,7 @@ import { ADD_TODO } from '../graphQueries'
 import { updateCacheCreate } from '../utils/updateCache'
 class AddTask extends React.Component {
   render() {
-    let input: object;
+    let input: HTMLInputElement;
 
     return (
       <Mutation

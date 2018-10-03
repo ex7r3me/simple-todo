@@ -19,10 +19,6 @@ type Priority = "None" | "Low" | "Medium" | "High";
 class SingleTask extends React.Component<
   {
     task: Task;
-    onIncreasePriority: () => void;
-    onDecreasePriority: () => void;
-    onDelete: () => void;
-    onDone: () => void;
   },
   { focused: boolean; date: moment.Moment }
 > {

@@ -1,5 +1,5 @@
 import * as React from "react";
-type OrderTypes = "title" | "dueDate" | "priority";
+type OrderTypes = "LcTitle" | "dueDate" | "priority";
 import Button from "@material-ui/core/Button";
 
 class SortButtons extends React.Component<{
@@ -13,7 +13,7 @@ class SortButtons extends React.Component<{
           variant="contained"
           color="secondary"
           onClick={() => {
-            this.props.sortTasks("title");
+            this.props.sortTasks("LcTitle");
           }}
         >
           Name

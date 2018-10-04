@@ -4,15 +4,17 @@ import SortButtons from "./SortButtons";
 import * as _ from "lodash";
 import "./TaskList.css";
 import Grid from "@material-ui/core/Grid";
-import { Task } from '../common/types';
+import { Task } from "../common/types";
 
-type OrderTypes = "title" | "dueDate" | "priority";
+type OrderTypes = "LcTitle" | "dueDate" | "priority";
 type OrderDirectionTypes = "asc" | "desc";
+
 class TaskList extends React.Component<
   { tasks: Array<Task> },
   {
     tasks: Array<Task>;
     orderBy: OrderTypes;
+    toggleOrder: boolean;
     orderDirection: OrderDirectionTypes;
   }
 > {
@@ -21,16 +23,29 @@ class TaskList extends React.Component<
     this.state = {
       tasks: [],
       orderDirection: "asc",
+      toggleOrder: false,
       orderBy: "title"
     };
   }
   sortTasks = (key: OrderTypes) => {
-    this.setState({ orderBy: key, orderDirection: "asc" });
+    let toggleOrder: boolean = false;
+    if (this.state.orderBy === key) {
+      toggleOrder = !this.state.toggleOrder;
+    }
+    let orderDirection: OrderDirectionTypes = toggleOrder ? "desc" : "asc";
+    this.setState({
+      orderBy: key,
+      orderDirection,
+      toggleOrder
+    });
   };
 
   render() {
+    let shadowTaskList = this.props.tasks.map(task => {
+      return { ...task, LcTitle: task.title.toLowerCase() };
+    });
     let sortedTaskList = _.orderBy(
-      this.props.tasks,
+      shadowTaskList,
       [this.state.orderBy],
       this.state.orderDirection
     );

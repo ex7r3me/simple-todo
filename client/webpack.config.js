@@ -24,15 +24,7 @@ module.exports = {
       },
       {
         test: /\.tsx?$/,
-        use: [
-          {
-            loader: "ts-loader",
-            options: {
-              transpileOnly: true,
-              experimentalWatchApi: true
-            }
-          }
-        ]
+        loader: "ts-loader"
       },
       {
         test: /\.(graphql|gql)$/,

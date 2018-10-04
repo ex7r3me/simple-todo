@@ -10,5 +10,6 @@ const resolvers_1 = require("./resolvers");
 const server = new apollo_server_express_1.ApolloServer({ typeDefs: typeDefs_1.typeDefs, resolvers: resolvers_1.resolvers });
 const app = express_1.default();
 server.applyMiddleware({ app });
-app.listen({ port: 8080 }, () => console.log(`🚀 Server ready at http://localhost:8080${server.graphqlPath}`));
+app.use(express_1.default.static("html"));
+app.listen({ port: 4000 }, () => console.log(`🚀 Server ready at http://localhost:4000${server.graphqlPath}`));
 //# sourceMappingURL=index.js.map

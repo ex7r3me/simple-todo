@@ -1,7 +1,7 @@
 From node:10-alpine
 WORKDIR /app
 COPY server ./
-COPY client/build ./html/
+COPY client/dist ./html/
 RUN yarn
 EXPOSE 4000
-CMD [ "node", "index.js" ]
+CMD [ "npm", "start" ]

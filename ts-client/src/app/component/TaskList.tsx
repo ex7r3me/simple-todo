@@ -1,17 +1,11 @@
 import * as React from "react";
-import SingleTask from "./SingleTask";
+import SingleTask from "./SingleTask/";
 import SortButtons from "./SortButtons";
-import * as moment from "moment";
 import * as _ from "lodash";
 import "./TaskList.css";
 import Grid from "@material-ui/core/Grid";
-interface Task {
-  title: string;
-  priority: number;
-  isDone: boolean;
-  dueDate: moment.Moment;
-  id: number;
-}
+import { Task } from '../common/types';
+
 type OrderTypes = "title" | "dueDate" | "priority";
 type OrderDirectionTypes = "asc" | "desc";
 class TaskList extends React.Component<

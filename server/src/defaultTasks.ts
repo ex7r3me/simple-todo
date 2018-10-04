@@ -1,21 +1,21 @@
 export const defaultTasks: any[] = [
   {
     id: 0,
-    title: "create a Readme",
+    title: "Create a Readme",
     priority: 1,
     isDone: false,
     dueDate: null
   },
   {
     id: 1,
-    title: "add something else",
+    title: "Finish The project",
     priority: 0,
     isDone: false,
     dueDate: null
   },
   {
     id: 2,
-    title: "read the specs",
+    title: "Host the project on github",
     priority: 2,
     isDone: true,
     dueDate: null

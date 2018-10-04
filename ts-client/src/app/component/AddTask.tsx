@@ -2,7 +2,6 @@ import * as React from "react";
 import { Mutation } from "react-apollo";
 import { ADD_TODO } from '../graphQueries'
 import { updateCacheCreate } from '../utils/updateCache'
-import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import * as moment from 'moment'
 
@@ -16,7 +15,7 @@ class AddTask extends React.Component {
         mutation={ADD_TODO}
         update={updateCacheCreate}
       >
-        {(createTask, { data }) => (
+        {(createTask) => (
           <div>
             <form
               onSubmit={e => {
@@ -38,7 +37,6 @@ class AddTask extends React.Component {
                   input = node;
                 }}
               />
-              <Button  variant="contained" color="primary" type="submit">Add Todo</Button>
             </form>
           </div>
         )}

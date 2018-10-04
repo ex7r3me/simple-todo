@@ -52,7 +52,8 @@ class SingleTask extends React.Component<
     }
   };
   render() {
-    const { title, isDone, id, priority }: Task = this.props.task;
+    const { title, isDone, id, priority, dueDate }: Task = this.props.task;
+    let momentDueDate = dueDate ? moment(dueDate) : null;
     return (
       <Paper className="single-task-paper">
         <Grid
@@ -62,7 +63,7 @@ class SingleTask extends React.Component<
           direction="row"
           spacing={24}
         >
-          <Grid item xs={2}>
+          <Grid item md={2}>
             <Mutation mutation={UPDATE_TODO} update={updateCacheDelete}>
               {(updateTodo: (variables: object) => {}) => (
                 <Checkbox
@@ -78,7 +79,7 @@ class SingleTask extends React.Component<
               )}
             </Mutation>
           </Grid>
-          <Grid item xs={3}>
+          <Grid item md={3}>
             <Typography
               variant="subheading"
               gutterBottom
@@ -87,50 +88,63 @@ class SingleTask extends React.Component<
               {title}
             </Typography>
           </Grid>
-          <Grid item xs={3}>
-            <SingleDatePicker
-              date={this.state.date}
-              onDateChange={date => this.setState({ date })}
-              focused={this.state.focused}
-              onFocusChange={({ focused }) =>
-                this.setState({
-                  focused
-                })
-              }
-              id={`task-date-${id}`}
-            />
+          <Grid item md={3}>
+            <Mutation mutation={UPDATE_TODO} update={updateCacheDelete}>
+              {(updateTodo: (variables: object) => {}) => (
+                <SingleDatePicker
+                  date={momentDueDate}
+                  onDateChange={date =>
+                    updateTodo({
+                      variables: {
+                        title,
+                        isDone,
+                        id,
+                        priority,
+                        dueDate: date
+                      }
+                    })
+                  }
+                  focused={this.state.focused}
+                  onFocusChange={({ focused }) =>
+                    this.setState({
+                      focused
+                    })
+                  }
+                  id={`task-date-${id}`}
+                />
+              )}
+            </Mutation>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item md={2}>
             <div className="priority-container">
-            <div>
-
-              <Mutation mutation={UPDATE_TODO} update={updateCacheDelete}>
-                {(updateTodo: (variables: object) => {}) => (
-                  <IconButton
-                    aria-label="Increase Priority"
-                    onClick={() => {
-                      const newPriority = priority - 1;
-                      updateTodo({
-                        variables: {
-                          title,
-                          isDone,
-                          id,
-                          priority: newPriority
-                        }
-                      });
-                    }}
-                  >
-                    <ExpandLess />
-                  </IconButton>
-                )}
-              </Mutation>
+              <div>
+                <Mutation mutation={UPDATE_TODO} update={updateCacheDelete}>
+                  {(updateTodo: (variables: object) => {}) => (
+                    <IconButton
+                      aria-label="Increase Priority"
+                      onClick={() => {
+                        const newPriority = priority - 1;
+                        updateTodo({
+                          variables: {
+                            title,
+                            isDone,
+                            id,
+                            priority: newPriority
+                          }
+                        });
+                      }}
+                    >
+                      <ExpandLess />
+                    </IconButton>
+                  )}
+                </Mutation>
               </div>
               <Typography variant="subheading" gutterBottom>
                 {this.priorityNames(priority)}
               </Typography>
               <div>
                 <Mutation mutation={UPDATE_TODO} update={updateCacheDelete}>
-                  {(updateTodo: (variables: object) => {}, {}) => (
+                  {(updateTodo: (variables: object) => {}) => (
                     <IconButton
                       onClick={() => {
                         const newPriority = priority + 1;
@@ -151,7 +165,7 @@ class SingleTask extends React.Component<
               </div>
             </div>
           </Grid>
-          <Grid item xs={2}>
+          <Grid item md={2}>
             <Mutation mutation={DELETE_TODO} update={updateCacheDelete}>
               {(deleteTodo: (variables: object) => {}) => (
                 <IconButton

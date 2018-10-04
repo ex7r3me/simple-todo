@@ -4,6 +4,7 @@ import { ADD_TODO } from '../graphQueries'
 import { updateCacheCreate } from '../utils/updateCache'
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import * as moment from 'moment'
 
 
 class AddTask extends React.Component {
@@ -25,7 +26,7 @@ class AddTask extends React.Component {
                     title: input.value,
                     isDone: false,
                     priority: 1,
-                    dueDate: null, //moment().add(7, "days")
+                    dueDate: moment().add(7, "days"),
                     id: null
                   }
                 });

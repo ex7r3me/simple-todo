@@ -30,6 +30,8 @@
     "webpack-hot-middleware": "^2.24.2"
   },
   "dependencies": {
+    "@material-ui/core": "^3.1.2",
+    "@material-ui/icons": "^3.0.1",
     "apollo-boost": "^0.1.16",
     "classnames": "^2.2.6",
     "express": "^4.16.3",

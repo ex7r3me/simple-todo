@@ -2,6 +2,15 @@
   display: flex;
   flex-direction: row;
 }
+.priority-container {
+  display:flex;
+  flex-direction: column;
+}
 .done {
   text-decoration: line-through;
+}
+.single-task-paper
+{
+  margin-top:25px;
+  margin-bottom:25px;
 }

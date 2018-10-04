@@ -1,34 +1,41 @@
 import * as React from "react";
 type OrderTypes = "title" | "dueDate" | "priority";
+import Button from "@material-ui/core/Button";
 
 class SortButtons extends React.Component<{
-  sortTasks: (orderBy: OrderTypes)=> void
+  sortTasks: (orderBy: OrderTypes) => void;
 }> {
   render() {
     return (
       <div>
         <p>sort by</p>
-        <button
+        <Button
+          variant="contained"
+          color="secondary"
           onClick={() => {
             this.props.sortTasks("title");
           }}
         >
           Name
-        </button>
-        <button
+        </Button>
+        <Button
+          variant="contained"
+          color="secondary"
           onClick={() => {
             this.props.sortTasks("dueDate");
           }}
         >
           Due Date
-        </button>
-        <button
+        </Button>
+        <Button
+          variant="contained"
+          color="secondary"
           onClick={() => {
             this.props.sortTasks("priority");
           }}
         >
           Priority
-        </button>
+        </Button>
       </div>
     );
   }

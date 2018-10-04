@@ -2,6 +2,10 @@ import * as React from "react";
 import { Mutation } from "react-apollo";
 import { ADD_TODO } from '../graphQueries'
 import { updateCacheCreate } from '../utils/updateCache'
+import Button from '@material-ui/core/Button';
+import TextField from '@material-ui/core/TextField';
+
+
 class AddTask extends React.Component {
   render() {
     let input: HTMLInputElement;
@@ -28,12 +32,12 @@ class AddTask extends React.Component {
                 input.value = "";
               }}
             >
-              <input
-                ref={node => {
+              <TextField
+                inputRef={node => {
                   input = node;
                 }}
               />
-              <button type="submit">Add Todo</button>
+              <Button  variant="contained" color="primary" type="submit">Add Todo</Button>
             </form>
           </div>
         )}

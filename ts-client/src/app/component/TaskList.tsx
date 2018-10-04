@@ -3,6 +3,8 @@ import SingleTask from "./SingleTask";
 import SortButtons from "./SortButtons";
 import * as moment from "moment";
 import * as _ from "lodash";
+import "./TaskList.css";
+import Grid from "@material-ui/core/Grid";
 interface Task {
   title: string;
   priority: number;
@@ -39,17 +41,18 @@ class TaskList extends React.Component<
       this.state.orderDirection
     );
     let taskList = sortedTaskList.map(task => {
-      return (
-        <SingleTask
-          task={task}
-          key={task.id}
-        />
-      );
+      return <SingleTask task={task} key={task.id} />;
     });
     return (
       <div>
         <SortButtons sortTasks={this.sortTasks} />
-        {taskList}
+        <div className="root">
+          <Grid container direction="row" justify="center" alignItems="center">
+            <Grid item xs={6}>
+              {taskList}
+            </Grid>
+          </Grid>
+        </div>
       </div>
     );
   }

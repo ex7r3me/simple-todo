@@ -1,9 +1,11 @@
 import { connect } from "react-redux";
 import * as React from "react";
 
-class ActivityList extends React.Component<{ activities:any }> {
+class ActivityList extends React.Component<{ activities: any }> {
   renderData() {
-    return this.props.activities.map((activity: any) => <p>{activity.text}</p>);
+    return this.props.activities.map((activity: any, index: number) => (
+      <p key={index}>{activity.text}</p>
+    ));
   }
 
   render() {
@@ -19,4 +21,4 @@ class ActivityList extends React.Component<{ activities:any }> {
   }
 }
 
-export default ActivityList
+export default ActivityList;

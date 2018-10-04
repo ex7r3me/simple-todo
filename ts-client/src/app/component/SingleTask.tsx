@@ -71,7 +71,13 @@ class SingleTask extends React.Component<
                   onChange={() => {
                     const newStatus = !isDone;
                     updateTodo({
-                      variables: { title, isDone: newStatus, id, priority }
+                      variables: {
+                        title,
+                        isDone: newStatus,
+                        id,
+                        priority,
+                        dueDate
+                      }
                     });
                   }}
                   value="isDone"
@@ -123,12 +129,13 @@ class SingleTask extends React.Component<
                     <IconButton
                       aria-label="Increase Priority"
                       onClick={() => {
-                        const newPriority = priority - 1;
+                        const newPriority = priority < 1 ? 0 : priority - 1;
                         updateTodo({
                           variables: {
                             title,
                             isDone,
                             id,
+                            dueDate,
                             priority: newPriority
                           }
                         });
@@ -147,11 +154,12 @@ class SingleTask extends React.Component<
                   {(updateTodo: (variables: object) => {}) => (
                     <IconButton
                       onClick={() => {
-                        const newPriority = priority + 1;
+                        const newPriority = priority > 1 ? 2 : priority + 1;
                         updateTodo({
                           variables: {
                             title,
                             isDone,
+                            dueDate,
                             id,
                             priority: newPriority
                           }

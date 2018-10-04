@@ -52,7 +52,8 @@ class SingleTask extends React.Component<
     }
   };
   render() {
-    const { title, isDone, id, priority, dueDate }: Task = this.props.task;
+    const task: Task = this.props.task,
+      { title, isDone, id, priority, dueDate }: Task = this.props.task;
     let momentDueDate = dueDate ? moment(dueDate) : null;
     return (
       <Paper className="single-task-paper">
@@ -71,13 +72,7 @@ class SingleTask extends React.Component<
                   onChange={() => {
                     const newStatus = !isDone;
                     updateTodo({
-                      variables: {
-                        title,
-                        isDone: newStatus,
-                        id,
-                        priority,
-                        dueDate
-                      }
+                      variables: { ...task, isDone: newStatus }
                     });
                   }}
                   value="isDone"
@@ -101,13 +96,7 @@ class SingleTask extends React.Component<
                   date={momentDueDate}
                   onDateChange={date =>
                     updateTodo({
-                      variables: {
-                        title,
-                        isDone,
-                        id,
-                        priority,
-                        dueDate: date
-                      }
+                      variables: { ...task, dueDate: date }
                     })
                   }
                   focused={this.state.focused}
@@ -131,13 +120,7 @@ class SingleTask extends React.Component<
                       onClick={() => {
                         const newPriority = priority < 1 ? 0 : priority - 1;
                         updateTodo({
-                          variables: {
-                            title,
-                            isDone,
-                            id,
-                            dueDate,
-                            priority: newPriority
-                          }
+                          variables: { ...task, priority: newPriority }
                         });
                       }}
                     >
@@ -156,13 +139,7 @@ class SingleTask extends React.Component<
                       onClick={() => {
                         const newPriority = priority > 1 ? 2 : priority + 1;
                         updateTodo({
-                          variables: {
-                            title,
-                            isDone,
-                            dueDate,
-                            id,
-                            priority: newPriority
-                          }
+                          variables: { ...task, priority: newPriority }
                         });
                       }}
                     >

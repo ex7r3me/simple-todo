@@ -13,13 +13,10 @@ class DueDate extends React.Component<
   { task: Task },
   { focused: boolean; date: moment.Moment }
 > {
-  constructor() {
-    super(null);
-    this.state = {
-      date: null,
-      focused: false
-    };
-  }
+  state: { date: moment.Moment; focused: boolean } = {
+    date: null,
+    focused: false
+  };
   render() {
     const task = this.props.task;
     let momentDueDate = task.dueDate ? moment(task.dueDate) : null;

@@ -1,13 +1,16 @@
 import * as React from "react";
 import * as ReactDOM from "react-dom";
-import { store } from "./store/configureStore";
+import { createStore } from 'redux'
 import { Provider } from 'react-redux'
 import "./index.css";
 import App from "./App";
 import ApolloClient from "apollo-boost";
 import { ApolloProvider } from "react-apollo";
+import rootReducer from './reducers/rootReducer'
+
 declare let module: any;
 
+const store = createStore(rootReducer)
 const client = new ApolloClient({
   uri: "http://localhost:8080/graphql"
 });

@@ -1,8 +1,8 @@
 import { combineReducers } from "redux";
-import activity from "./activityReducer";
+import activities from "./activityReducer";
 
 const rootReducer = combineReducers({
-  activity
+  activities
 });
 
 export default rootReducer;

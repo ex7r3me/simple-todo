@@ -18,15 +18,17 @@ class TaskList extends React.Component<
     orderDirection: OrderDirectionTypes;
   }
 > {
-  constructor() {
-    super(null);
-    this.state = {
-      tasks: [],
-      orderDirection: "asc",
-      toggleOrder: false,
-      orderBy: "title"
-    };
-  }
+  state: {
+    tasks: Array<Task>;
+    orderBy: OrderTypes;
+    toggleOrder: boolean;
+    orderDirection: OrderDirectionTypes;
+  } = {
+    tasks: [],
+    orderDirection: "asc",
+    toggleOrder: false,
+    orderBy: "LcTitle"
+  };
   sortTasks = (key: OrderTypes) => {
     let toggleOrder: boolean = false;
     if (this.state.orderBy === key) {

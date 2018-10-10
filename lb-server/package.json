@@ -44,17 +44,17 @@
     "src"
   ],
   "dependencies": {
-    "@loopback/boot": "^0.14.6",
-    "@loopback/context": "^0.13.1",
-    "@loopback/core": "^0.11.16",
-    "@loopback/openapi-v3": "^0.15.5",
-    "@loopback/repository": "^0.21.1",
-    "@loopback/rest": "^0.25.5",
-    "@loopback/service-proxy": "^0.8.10"
+    "@loopback/boot": "^1.0.0",
+    "@loopback/context": "^1.0.0",
+    "@loopback/core": "^1.0.0",
+    "@loopback/openapi-v3": "^1.0.0",
+    "@loopback/repository": "^1.0.0",
+    "@loopback/rest": "^1.0.0",
+    "@loopback/service-proxy": "^1.0.0"
   },
   "devDependencies": {
-    "@loopback/build": "^0.7.6",
-    "@loopback/testlab": "^0.15.1",
+    "@loopback/build": "^1.0.0",
+    "@loopback/testlab": "^1.0.0",
     "@types/node": "^10.11.2"
   }
 }
